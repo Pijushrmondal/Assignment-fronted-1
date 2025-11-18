@@ -6,51 +6,140 @@ interface Props {
 }
 
 export default function ScreensTable({ items, onToggle }: Props) {
+  if (items.length === 0) {
+    return (
+      <div className="card" style={{
+        textAlign: "center",
+        padding: "var(--spacing-2xl)",
+        color: "var(--text-secondary)"
+      }}>
+        <div style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)" }}>📺</div>
+        <p style={{ fontSize: "1rem", fontWeight: "500" }}>No screens found</p>
+        <p style={{ fontSize: "0.875rem", marginTop: "0.5rem" }}>
+          Create your first screen to get started
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <table className="w-full border-collapse border border-gray-300">
-      <thead>
-        <tr className="bg-gray-200">
-          <th className="p-2 border border-gray-300 text-left">Name</th>
-          <th className="p-2 border border-gray-300 text-left">Status</th>
-          <th className="p-2 border border-gray-300 text-left">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {items.length === 0 ? (
-          <tr>
-            <td colSpan={3} className="p-4 text-center text-gray-500">
-              No screens found
-            </td>
-          </tr>
-        ) : (
-          items.map((screen) => (
-            <tr key={screen._id} className="hover:bg-gray-50">
-              <td className="p-2 border border-gray-300">{screen.name}</td>
-              <td className="p-2 border border-gray-300">
-                <span
-                  className={`px-2 py-1 rounded text-sm ${
-                    screen.isActive
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
-                  }`}
-                >
-                  {screen.isActive ? "Active" : "Inactive"}
-                </span>
-              </td>
-              <td className="p-2 border border-gray-300">
-                <button
-                  onClick={() => onToggle(screen._id)}
-                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-                  aria-label={`Toggle ${screen.name} status`}
-                >
-                  Toggle
-                </button>
-              </td>
+    <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+      <div style={{
+        overflowX: "auto"
+      }}>
+        <table style={{
+          width: "100%",
+          borderCollapse: "collapse"
+        }}>
+          <thead>
+            <tr style={{
+              background: "var(--bg-secondary)",
+              borderBottom: "2px solid var(--border-color)"
+            }}>
+              <th style={{
+                padding: "1rem",
+                textAlign: "left",
+                fontWeight: "600",
+                fontSize: "0.875rem",
+                color: "var(--text-primary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em"
+              }}>
+                Screen Name
+              </th>
+              <th style={{
+                padding: "1rem",
+                textAlign: "left",
+                fontWeight: "600",
+                fontSize: "0.875rem",
+                color: "var(--text-primary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em"
+              }}>
+                Status
+              </th>
+              <th style={{
+                padding: "1rem",
+                textAlign: "left",
+                fontWeight: "600",
+                fontSize: "0.875rem",
+                color: "var(--text-primary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em"
+              }}>
+                Action
+              </th>
             </tr>
-          ))
-        )}
-      </tbody>
-    </table>
+          </thead>
+          <tbody>
+            {items.map((screen, index) => (
+              <tr
+                key={screen._id}
+                style={{
+                  borderBottom: index < items.length - 1 ? "1px solid var(--border-color)" : "none",
+                  transition: "background-color var(--transition-fast)",
+                  cursor: "pointer"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "var(--bg-secondary)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                <td style={{
+                  padding: "1rem",
+                  fontWeight: "500",
+                  color: "var(--text-primary)"
+                }}>
+                  {screen.name}
+                </td>
+                <td style={{ padding: "1rem" }}>
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      padding: "0.375rem 0.75rem",
+                      borderRadius: "var(--border-radius)",
+                      fontSize: "0.8125rem",
+                      fontWeight: "600",
+                      background: screen.isActive
+                        ? "rgba(16, 185, 129, 0.1)"
+                        : "rgba(239, 68, 68, 0.1)",
+                      color: screen.isActive
+                        ? "var(--success-dark)"
+                        : "var(--danger-dark)",
+                    }}
+                  >
+                    <span style={{
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      background: screen.isActive ? "var(--success)" : "var(--danger)"
+                    }} />
+                    {screen.isActive ? "Active" : "Inactive"}
+                  </span>
+                </td>
+                <td style={{ padding: "1rem" }}>
+                  <button
+                    onClick={() => onToggle(screen._id)}
+                    className="btn btn-primary"
+                    style={{
+                      padding: "0.5rem 1rem",
+                      fontSize: "0.8125rem"
+                    }}
+                    aria-label={`Toggle ${screen.name} status`}
+                  >
+                    Toggle
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 

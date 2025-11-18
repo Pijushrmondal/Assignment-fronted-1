@@ -12,3 +12,18 @@ export interface LoginResponse {
   };
 }
 
+export interface SignupRequest {
+  email: string;
+  password: string;
+  role: "ADMIN" | "EDITOR";
+}
+
+export interface SignupResponse {
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    role: "ADMIN" | "EDITOR";
+  };
+}
+

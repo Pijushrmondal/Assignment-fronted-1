@@ -4,6 +4,8 @@ export interface Screen {
   _id: string;
   name: string;
   isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ScreensResponse {
@@ -13,12 +15,32 @@ export interface ScreensResponse {
   limit: number;
 }
 
+export interface CreateScreenRequest {
+  name: string;
+  isActive?: boolean;
+}
+
+export interface CreateScreenResponse {
+  _id: string;
+  name: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export const getScreens = async (params: {
   search?: string;
   page?: number;
   limit?: number;
 }): Promise<ScreensResponse> => {
   const res = await api.get<ScreensResponse>("/screens", { params });
+  return res.data;
+};
+
+export const createScreen = async (
+  data: CreateScreenRequest
+): Promise<CreateScreenResponse> => {
+  const res = await api.post<CreateScreenResponse>("/screens", data);
   return res.data;
 };
 

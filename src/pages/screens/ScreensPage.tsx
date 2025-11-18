@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getScreens, toggleScreenStatus } from "../../api/screens";
 import type { Screen } from "../../api/screens";
 import ScreensTable from "../../components/screens/ScreensTable";
+import ScreenForm from "../../components/screens/ScreenForm";
 import Loader from "../../components/common/Loader";
 import ErrorBox from "../../components/common/ErrorBox";
 import Pagination from "../../components/common/Pagination";
@@ -51,28 +52,55 @@ const ScreensPage = () => {
     }
   };
 
-  return (
-    <div style={{ padding: "2rem" }}>
-      <h2 style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem" }}>
-        Screens
-      </h2>
+  const handleSuccess = () => {
+    fetchData();
+  };
 
-      <input
-        type="text"
-        placeholder="Search screens..."
-        value={search}
-        onChange={(e) => {
-          setPage(1);
-          setSearch(e.target.value);
-        }}
-        style={{
-          border: "1px solid #ccc",
-          padding: "0.5rem",
-          marginBottom: "1rem",
-          width: "300px",
-          borderRadius: "4px",
-        }}
-      />
+  return (
+    <div>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "var(--spacing-xl)"
+      }}>
+        <div>
+          <h1 style={{
+            fontSize: "2rem",
+            fontWeight: "700",
+            marginBottom: "0.5rem",
+            color: "var(--text-primary)"
+          }}>
+            📺 Screens
+          </h1>
+          <p style={{
+            color: "var(--text-secondary)",
+            fontSize: "0.875rem"
+          }}>
+            Manage your display screens
+          </p>
+        </div>
+      </div>
+
+      <ScreenForm onSuccess={handleSuccess} />
+
+      <div style={{ marginBottom: "var(--spacing-lg)" }}>
+        <input
+          type="text"
+          placeholder="🔍 Search screens..."
+          value={search}
+          onChange={(e) => {
+            setPage(1);
+            setSearch(e.target.value);
+          }}
+          className="input"
+          style={{
+            maxWidth: "400px",
+            padding: "0.75rem 1rem",
+            fontSize: "0.875rem"
+          }}
+        />
+      </div>
 
       {error && <ErrorBox message={error} />}
 

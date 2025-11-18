@@ -21,37 +21,49 @@ export default function Pagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div style={{ display: "flex", gap: "8px", marginTop: "1rem", alignItems: "center" }}>
+    <div style={{ 
+      display: "flex", 
+      gap: "0.5rem", 
+      marginTop: "var(--spacing-xl)", 
+      alignItems: "center",
+      justifyContent: "center",
+      flexWrap: "wrap"
+    }}>
       <button 
         disabled={page === 1} 
         onClick={() => handleChange(page - 1)}
+        className="btn btn-primary"
         style={{
-          padding: "0.5rem 1rem",
-          border: "1px solid #ccc",
-          background: page === 1 ? "#f5f5f5" : "white",
+          opacity: page === 1 ? 0.5 : 1,
           cursor: page === 1 ? "not-allowed" : "pointer",
-          borderRadius: "4px",
         }}
       >
-        Prev
+        ← Previous
       </button>
 
-      <span style={{ padding: "0 1rem" }}>
+      <div style={{ 
+        padding: "0.5rem 1rem",
+        background: "var(--bg-secondary)",
+        borderRadius: "var(--border-radius)",
+        fontSize: "0.875rem",
+        fontWeight: "500",
+        color: "var(--text-primary)",
+        minWidth: "120px",
+        textAlign: "center"
+      }}>
         Page {page} of {totalPages}
-      </span>
+      </div>
 
       <button 
         disabled={page === totalPages} 
         onClick={() => handleChange(page + 1)}
+        className="btn btn-primary"
         style={{
-          padding: "0.5rem 1rem",
-          border: "1px solid #ccc",
-          background: page === totalPages ? "#f5f5f5" : "white",
+          opacity: page === totalPages ? 0.5 : 1,
           cursor: page === totalPages ? "not-allowed" : "pointer",
-          borderRadius: "4px",
         }}
       >
-        Next
+        Next →
       </button>
     </div>
   );

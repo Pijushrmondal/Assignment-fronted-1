@@ -1,15 +1,16 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../../api/auth";
+import { signup } from "../../api/auth";
 import { useAuth } from "../../hooks/useAuth";
-import Loader from "../../components/common/Loader";
 import ErrorBox from "../../components/common/ErrorBox";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const { token, login: setAuth } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<"ADMIN" | "EDITOR">("EDITOR");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -22,10 +23,22 @@ export default function LoginPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
+
+    // Validation
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await login({ email, password });
+      const response = await signup({ email, password, role });
       setAuth(response.token, {
         id: response.user.id,
         email: response.user.email,
@@ -33,7 +46,9 @@ export default function LoginPage() {
       });
       navigate("/screens");
     } catch (err: any) {
-      setError(err?.response?.data?.message || "Login failed");
+      setError(
+        err?.response?.data?.message || err?.message || "Signup failed"
+      );
     } finally {
       setLoading(false);
     }
@@ -63,16 +78,16 @@ export default function LoginPage() {
             WebkitTextFillColor: "transparent",
             backgroundClip: "text"
           }}>
-            Welcome Back
+            Create Account
           </h1>
           <p style={{ 
             color: "var(--text-secondary)",
             fontSize: "0.875rem"
           }}>
-            Sign in to your account to continue
+            Sign up to get started
           </p>
         </div>
-      
+
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "var(--spacing-lg)" }}>
             <label className="label">
@@ -84,7 +99,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="input"
-              placeholder="admin@example.com"
+              placeholder="user@example.com"
             />
           </div>
 
@@ -97,9 +112,41 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              minLength={6}
               className="input"
-              placeholder="Enter your password"
+              placeholder="At least 6 characters"
             />
+          </div>
+
+          <div style={{ marginBottom: "var(--spacing-lg)" }}>
+            <label className="label">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              minLength={6}
+              className="input"
+              placeholder="Confirm your password"
+            />
+          </div>
+
+          <div style={{ marginBottom: "var(--spacing-lg)" }}>
+            <label className="label">
+              Role
+            </label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value as "ADMIN" | "EDITOR")}
+              required
+              className="input"
+              style={{ cursor: "pointer" }}
+            >
+              <option value="EDITOR">Editor</option>
+              <option value="ADMIN">Admin</option>
+            </select>
           </div>
 
           {error && <ErrorBox message={error} />}
@@ -107,7 +154,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="btn btn-primary"
+            className="btn btn-success"
             style={{
               width: "100%",
               padding: "0.875rem",
@@ -115,98 +162,21 @@ export default function LoginPage() {
               marginTop: "var(--spacing-md)"
             }}
           >
-            {loading ? "Logging in..." : "Sign In"}
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
 
-        <div style={{ 
-          marginTop: "var(--spacing-xl)", 
-          padding: "var(--spacing-lg)", 
-          background: "var(--bg-secondary)", 
-          borderRadius: "var(--border-radius)",
-          border: "1px solid var(--border-color)"
-        }}>
-          <p style={{ 
-            marginBottom: "var(--spacing-md)", 
-            fontWeight: "600", 
-            color: "var(--text-primary)",
-            fontSize: "0.875rem"
-          }}>
-            🧪 Test Credentials
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <div style={{ 
-              display: "flex", 
-              gap: "0.75rem", 
-              alignItems: "center",
-              flexWrap: "wrap"
-            }}>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail("admin@example.com");
-                  setPassword("admin123");
-                }}
-                className="btn btn-success"
-                style={{
-                  padding: "0.5rem 0.875rem",
-                  fontSize: "0.8125rem",
-                }}
-              >
-                Fill Admin
-              </button>
-              <span style={{ 
-                fontSize: "0.8125rem", 
-                color: "var(--text-secondary)",
-                fontFamily: "var(--font-mono)"
-              }}>
-                admin@example.com / admin123
-              </span>
-            </div>
-            <div style={{ 
-              display: "flex", 
-              gap: "0.75rem", 
-              alignItems: "center",
-              flexWrap: "wrap"
-            }}>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail("editor@example.com");
-                  setPassword("editor123");
-                }}
-                className="btn"
-                style={{
-                  padding: "0.5rem 0.875rem",
-                  fontSize: "0.8125rem",
-                  background: "var(--info)",
-                  color: "white"
-                }}
-              >
-                Fill Editor
-              </button>
-              <span style={{ 
-                fontSize: "0.8125rem", 
-                color: "var(--text-secondary)",
-                fontFamily: "var(--font-mono)"
-              }}>
-                editor@example.com / editor123
-              </span>
-            </div>
-          </div>
-        </div>
-
         <div style={{ textAlign: "center", marginTop: "var(--spacing-lg)" }}>
           <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              to="/signup"
+              to="/login"
               style={{
                 color: "var(--primary)",
                 fontWeight: "600",
               }}
             >
-              Sign up here
+              Login here
             </Link>
           </p>
         </div>

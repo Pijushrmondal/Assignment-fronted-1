@@ -42,27 +42,47 @@ export default function PlaylistsPage() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2 style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem" }}>
-        Playlists
-      </h2>
+    <div>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "var(--spacing-xl)"
+      }}>
+        <div>
+          <h1 style={{
+            fontSize: "2rem",
+            fontWeight: "700",
+            marginBottom: "0.5rem",
+            color: "var(--text-primary)"
+          }}>
+            🎵 Playlists
+          </h1>
+          <p style={{
+            color: "var(--text-secondary)",
+            fontSize: "0.875rem"
+          }}>
+            Organize your media content
+          </p>
+        </div>
+      </div>
 
       <PlaylistForm onSuccess={handleSuccess} />
 
-      <div style={{ marginBottom: "1rem" }}>
+      <div style={{ marginBottom: "var(--spacing-lg)" }}>
         <input
           type="text"
-          placeholder="Search playlists..."
+          placeholder="🔍 Search playlists..."
           value={search}
           onChange={(e) => {
             setPage(1);
             setSearch(e.target.value);
           }}
+          className="input"
           style={{
-            border: "1px solid #ccc",
-            padding: "0.5rem",
-            width: "300px",
-            borderRadius: "4px",
+            maxWidth: "400px",
+            padding: "0.75rem 1rem",
+            fontSize: "0.875rem"
           }}
         />
       </div>
