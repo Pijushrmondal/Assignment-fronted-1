@@ -1,5 +1,3 @@
-// /src/components/common/Pagination.tsx
-
 interface Props {
   page: number;
   total: number;
@@ -8,29 +6,31 @@ interface Props {
   onPageChange?: (p: number) => void; // alias for onChange
 }
 
-export default function Pagination({ 
-  page, 
-  total, 
-  limit, 
+export default function Pagination({
+  page,
+  total,
+  limit,
   onChange,
-  onPageChange 
+  onPageChange,
 }: Props) {
   const totalPages = Math.ceil(total / limit);
   const handleChange = onPageChange || onChange;
-  
+
   if (totalPages <= 1) return null;
 
   return (
-    <div style={{ 
-      display: "flex", 
-      gap: "0.5rem", 
-      marginTop: "var(--spacing-xl)", 
-      alignItems: "center",
-      justifyContent: "center",
-      flexWrap: "wrap"
-    }}>
-      <button 
-        disabled={page === 1} 
+    <div
+      style={{
+        display: "flex",
+        gap: "0.5rem",
+        marginTop: "var(--spacing-xl)",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      <button
+        disabled={page === 1}
         onClick={() => handleChange(page - 1)}
         className="btn btn-primary"
         style={{
@@ -41,21 +41,23 @@ export default function Pagination({
         ← Previous
       </button>
 
-      <div style={{ 
-        padding: "0.5rem 1rem",
-        background: "var(--bg-secondary)",
-        borderRadius: "var(--border-radius)",
-        fontSize: "0.875rem",
-        fontWeight: "500",
-        color: "var(--text-primary)",
-        minWidth: "120px",
-        textAlign: "center"
-      }}>
+      <div
+        style={{
+          padding: "0.5rem 1rem",
+          background: "var(--bg-secondary)",
+          borderRadius: "var(--border-radius)",
+          fontSize: "0.875rem",
+          fontWeight: "500",
+          color: "var(--text-primary)",
+          minWidth: "120px",
+          textAlign: "center",
+        }}
+      >
         Page {page} of {totalPages}
       </div>
 
-      <button 
-        disabled={page === totalPages} 
+      <button
+        disabled={page === totalPages}
         onClick={() => handleChange(page + 1)}
         className="btn btn-primary"
         style={{
