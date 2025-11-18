@@ -1,4 +1,5 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { createPlaylist } from "../../api/playlists";
 import type { CreatePlaylistRequest } from "../../api/playlists";
 import ErrorBox from "../common/ErrorBox";

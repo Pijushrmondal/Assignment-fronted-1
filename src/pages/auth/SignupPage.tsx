@@ -1,4 +1,5 @@
-import { useState, FormEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
+import type { FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../api/auth";
 import { useAuth } from "../../hooks/useAuth";

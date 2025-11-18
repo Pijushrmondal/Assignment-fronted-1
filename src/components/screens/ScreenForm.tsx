@@ -1,4 +1,5 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { createScreen } from "../../api/screens";
 import type { CreateScreenRequest } from "../../api/screens";
 import ErrorBox from "../common/ErrorBox";

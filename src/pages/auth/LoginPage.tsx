@@ -1,8 +1,8 @@
-import { useState, FormEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
+import type { FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../api/auth";
 import { useAuth } from "../../hooks/useAuth";
-import Loader from "../../components/common/Loader";
 import ErrorBox from "../../components/common/ErrorBox";
 
 export default function LoginPage() {
