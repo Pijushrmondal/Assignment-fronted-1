@@ -1,0 +1,58 @@
+/src
+  /api
+    auth.ts
+    screens.ts
+    playlists.ts
+
+  /components
+    /common
+      Loader.tsx
+      ErrorBox.tsx
+      Pagination.tsx
+    /screens
+      ScreensTable.tsx
+    /playlists
+      PlaylistForm.tsx
+      PlaylistsList.tsx
+
+  /context
+    AuthContext.tsx
+
+  /hooks
+    useAuth.ts
+    useFetch.ts   // optional but useful
+
+  /layouts
+    DashboardLayout.tsx
+    AuthLayout.tsx
+
+  /pages
+    /auth
+      LoginPage.tsx
+
+    /screens
+      ScreensPage.tsx
+
+    /playlists
+      PlaylistsPage.tsx
+
+  /router
+    AppRouter.tsx
+    ProtectedRoute.tsx
+
+  /styles
+    globals.css
+
+  /types
+    auth.d.ts
+    screen.d.ts
+    playlist.d.ts
+    api.d.ts
+
+  /utils
+    fetcher.ts
+    storage.ts     // localStorage helpers
+    validators.ts  // frontend validation
+
+main.tsx
+App.tsx
