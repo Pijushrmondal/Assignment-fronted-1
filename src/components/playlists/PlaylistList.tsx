@@ -1,4 +1,4 @@
-import { Playlist } from "../../api/playlists";
+import type { Playlist } from "../../api/playlists";
 
 interface Props {
   items: Playlist[];

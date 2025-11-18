@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
-import { createPlaylist, CreatePlaylistRequest } from "../../api/playlists";
+import { createPlaylist } from "../../api/playlists";
+import type { CreatePlaylistRequest } from "../../api/playlists";
 import ErrorBox from "../common/ErrorBox";
 
 interface Props {

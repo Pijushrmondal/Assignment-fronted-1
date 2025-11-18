@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getScreens, toggleScreenStatus, Screen } from "../../api/screens";
+import { getScreens, toggleScreenStatus } from "../../api/screens";
+import type { Screen } from "../../api/screens";
 import ScreensTable from "../../components/screens/ScreensTable";
 import Loader from "../../components/common/Loader";
 import ErrorBox from "../../components/common/ErrorBox";

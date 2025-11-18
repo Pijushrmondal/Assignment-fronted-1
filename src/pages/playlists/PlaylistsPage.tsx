@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getPlaylists, Playlist } from "../../api/playlists";
+import { getPlaylists } from "../../api/playlists";
+import type { Playlist } from "../../api/playlists";
 import PlaylistForm from "../../components/playlists/PlaylistForm";
 import PlaylistList from "../../components/playlists/PlaylistList";
 import Loader from "../../components/common/Loader";

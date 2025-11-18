@@ -1,4 +1,4 @@
-import { Screen } from "../../api/screens";
+import type { Screen } from "../../api/screens";
 
 interface Props {
   items: Screen[];

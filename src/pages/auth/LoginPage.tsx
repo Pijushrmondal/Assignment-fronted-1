@@ -6,20 +6,18 @@ import Loader from "../../components/common/Loader";
 import ErrorBox from "../../components/common/ErrorBox";
 
 export default function LoginPage() {
-  const { token } = useAuth();
+  const { token, login: setAuth } = useAuth();
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (token) {
       navigate("/screens", { replace: true });
     }
   }, [token, navigate]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const { login: setAuth } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
