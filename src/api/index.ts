@@ -1,7 +1,9 @@
 import axios from "axios";
 import { getToken } from "../utils/storage";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE =
+  import.meta.env.VITE_API_URL ||
+  "https://assignment-backend-1-production.up.railway.app";
 
 export const api = axios.create({
   baseURL: API_BASE,
